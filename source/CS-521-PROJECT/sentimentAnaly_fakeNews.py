@@ -33,6 +33,5 @@ def main():
     for sentence in sent:
         print(sentence, TextBlob(sentence).polarity)
 
-
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
