@@ -97,4 +97,17 @@ def dep_par_sents(df):
 docs=[]
 for each in range(0, len(df.index)):
     displacy.serve(df[each], style='dep')
-##
+
+
+## helper function to filter out tags
+## where we want to filter the word with tag- noun,adjective,verb,adverb
+
+def filterTag(tagged_fakenews_statement):
+    final_text_list=[]
+    for text_list in tagged_fakenews_statement:
+        final_text=[]
+        for word,tag in text_list:
+            if tag in ['NN','NNS','NNP','NNPS','RB','RBR','RBS','JJ','JJR','JJS','VB','VBD','VBG','VBN','VBP','VBZ']:
+                final_text.append(word)
+        final_text_list.append(' '.join(final_text))
+    return final_text_list
