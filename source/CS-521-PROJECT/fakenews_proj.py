@@ -36,7 +36,7 @@ df=read_file('train.tsv')
 df=pd.DataFrame(df)
 df.columns=['statement_ID','label','statement','subject','speaker','job_title',
            'state_info','pantry_affiliation','tot_credit_hist_cnt','barely_true_cnt','false_cnt',
-           'half_true_cnt','mostly_true_cnt','pants_on_fire_cnt']
+           'half_true_cnt','mostly_true_cnt','pants_on_fire_cnt','context']
 
 df.head()
 df.tail()
