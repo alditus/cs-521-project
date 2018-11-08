@@ -98,7 +98,6 @@ docs=[]
 for each in range(0, len(df.index)):
     displacy.serve(df[each], style='dep')
 
-
 ## helper function to filter out tags
 ## where we want to filter the word with tag- noun,adjective,verb,adverb
 
