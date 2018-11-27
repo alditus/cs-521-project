@@ -38,3 +38,22 @@ def tsv_to_dict(tsv_file,columns=None):
 		data_dict[d_key] = tsv_file[[each_column]].values[:,0] 
 
 	return data_dict
+
+"""
+	return the most frequent element in a sequence
+"""
+def mode(seq):
+  if len(seq) == 0:
+    return 1.
+  else:
+    cnt = {}
+    for item in seq:
+      if item in cnt:
+        cnt[item] += 1
+      else:
+        cnt[item] = 1
+    maxItem = seq[0]
+    for item,c in cnt.items():
+      if c > cnt[maxItem]:
+        maxItem = item
+    return maxItem
