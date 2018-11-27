@@ -5,7 +5,7 @@ import spacy, en_core_web_sm
 def get_key_phrase(sent):
     nlp=en_core_web_sm.load()
     parsed=nlp(sent)
-    compound_nn_adj, reg_nn_adj=[],[]
+    compound_nn_adj, reg_nn_adj, props=[],[],[]
     compound_list=[tok for tok in parsed if tok.dep_=='compound']
     compound_list=[nc for nc in compound_list if nc.i==0 or parsed[nc.i-1].dep_!='compound']
     if len(compound_list)!=0:
@@ -30,8 +30,9 @@ def get_key_phrase(sent):
             for j in range(i+1, len(parsed)):
                 if parsed[j].pos_=='ADJ':
                     reg_nn_adj.append(tok, parsed[j])
-                    break
-    return compound_nn_adj, reg_nn_adj
+                if parsed[j].pos_=='ADP':
+                    props.append(tok, parsed[j])
+    return compound_nn_adj, reg_nn_adj, props
 
 ## how to use the function
 
