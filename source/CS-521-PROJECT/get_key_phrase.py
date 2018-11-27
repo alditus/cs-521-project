@@ -32,3 +32,11 @@ def get_key_phrase(sent):
                     reg_nn_adj.append(tok, parsed[j])
                     break
     return compound_nn_adj, reg_nn_adj
+
+## how to use the function
+
+phrase_corpus=[]
+for i in range(0, len(dataset)):
+    parsed=nlp(dataset['statement'][i])
+    res=get_key_phrase(parsed)
+    phrase_corpus.append(res)
