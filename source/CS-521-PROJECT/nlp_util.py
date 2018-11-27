@@ -47,3 +47,19 @@ class NLP_Task:
 					tag_group.append(format_str)
 			result.append(tag_group)
 		return result
+
+	"""
+		return the list of tokens per statement
+	"""
+	def TokensBySentence(self, sentences):
+		tbs =  list()
+		for sentence in sentences:
+			token_list = list()
+			output = self.core_nlp.annotate(sentence, properties={
+			  'annotators': 'tokenize',
+			  'outputFormat': 'json'
+			  })
+			for t in output['tokens']:
+				token_list.append(t['word'])
+			tbs.append(token_list)
+		return tbs
