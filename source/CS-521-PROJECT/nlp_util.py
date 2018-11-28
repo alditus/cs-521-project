@@ -43,7 +43,7 @@ class NLP_Task:
 					for i in range(0,grams):
 						format_str += sentence_tags[index+i]
 						if i<grams-1:
-							format_str += ' '
+							format_str += '_'
 					tag_group.append(format_str)
 			result.append(tag_group)
 		return result

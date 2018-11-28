@@ -7,6 +7,11 @@ def extract_POS(statements):
 	pos_tags = corenlp.POS_tagging(statements,return_word_tag_pairs=False)
 	bigrams_pos = corenlp.POS_groupping(pos_tags, grams=2)
 	trigrams_pos = corenlp.POS_groupping(pos_tags, grams=3)
+	#For experimenting
+	print("Stringify")
+	pos_tags = [" ".join(x) for x in pos_tags]
+	bigrams_pos = [" ".join(x) for x in bigrams_pos]
+	trigrams_pos = [" ".join(x) for x in trigrams_pos]
 	print('Finished')
 	return pos_tags,bigrams_pos,trigrams_pos
 
