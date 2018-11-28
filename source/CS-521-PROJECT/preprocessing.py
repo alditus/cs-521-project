@@ -1,6 +1,44 @@
 import nlp_util
 import numpy as np
+import pandas as pd
+import string
 # return POS grouped by unigrams, bigrams, trigrams using a dictionary
+
+## read dataset
+df=pd.read_csv('train.tsv',delimiter='\t',encoding='utf-8')
+df.columns=['ID','Label','Statement','Subject','speaker','job_title',
+           'state_info','pantry_affiliation','barely_true_cnt','false_cnt',
+           'half_true_cnt','mostly_true_cnt','pants_on_fire_cnt','Context']
+
+#---------------------------------------------------#
+## data cleaning phase
+
+stop=set(stopwords.words('english'))
+text_no_stops=[]
+for elm in range(0, len(dataset.index)):
+    res=' '.join([i for i in dataset['Statement'][elm].lower().split() if i not in stop])
+    text_no_stops.append(res)
+
+## remove the punctuation
+def rm_punct(sentence):
+    flushed_punct = set(string.punctuation)
+    res = ''.join(x for x in sentence if x not in flushed_punct)
+    return res
+
+text_no_punct=[]
+for i in range(0, len(dataset.index)):
+    res=rm_punct(dataset['Statement'][i])
+    text_no_punct.append(res)
+
+## here is how to clean up non-letter symbols in statement columns
+all_text = []
+for i in range(0, len(dataset.index)):
+    patt = re.sub('[^a-zA-Z]', ' ', dataset['Statement'][i])
+    res = ' '.join(str(patt).lower().split())
+    all_text.append(res)
+
+#-----------------------------------------#
+
 def extract_POS(statements):
 	corenlp = nlp_util.NLP_Task()
 	print('Extracting POS Tags')
