@@ -1,6 +1,7 @@
 import nlp_util
 import numpy as np
 import pandas as pd
+from nltk.corpus import stopwords
 import string
 # return POS grouped by unigrams, bigrams, trigrams using a dictionary
 
