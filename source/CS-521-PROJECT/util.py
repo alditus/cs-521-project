@@ -21,6 +21,23 @@ def load_files(path='..\\dataset\\{0}', file_names=['train.tsv','valid.tsv','tes
 
 	return train_file, validation_file, testing_file
 
+def load_file(path, file_name):
+	# define columns names
+	#column_names = ['Id', 'Label','Statement','Subject','Speaker','Speaker Job','State Info','Party','BT','FC','HT','MT','PF','Context']
+
+	# load each file
+	uploading_file = pd.read_csv(path.format(file_name), encoding='utf-8')
+	#validation_file = pd.read_csv(path.format(file_names[1]), sep='\t',header=None, encoding='utf-8')
+	#testing_file = pd.read_csv(path.format(file_names[2]), sep='\t',header=None, encoding='utf-8')
+
+	# set columns names
+	#train_file.columns = column_names
+	#validation_file.columns = column_names
+	#testing_file.columns = column_names
+
+	return uploading_file
+
+
 """
 	Convert tsv file columns into a dictionary
 	return: dictionary with specified columns
