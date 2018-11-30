@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import string
 # return POS grouped by unigrams, bigrams, trigrams using a dictionary
-
+"""
 ## read dataset
 df=pd.read_csv('train.tsv',delimiter='\t',encoding='utf-8')
 df.columns=['ID','Label','Statement','Subject','speaker','job_title',
@@ -38,7 +38,7 @@ for i in range(0, len(dataset.index)):
     all_text.append(res)
 
 #-----------------------------------------#
-
+"""
 def extract_POS(statements):
 	corenlp = nlp_util.NLP_Task()
 	print('Extracting POS Tags')
@@ -46,10 +46,10 @@ def extract_POS(statements):
 	bigrams_pos = corenlp.POS_groupping(pos_tags, grams=2)
 	trigrams_pos = corenlp.POS_groupping(pos_tags, grams=3)
 	#For experimenting
-	print("Stringify")
-	pos_tags = [" ".join(x) for x in pos_tags]
-	bigrams_pos = [" ".join(x) for x in bigrams_pos]
-	trigrams_pos = [" ".join(x) for x in trigrams_pos]
+	#print("Stringify")
+	#pos_tags = [" ".join(x).replace('PRP$','PRP_DOLLAR') for x in pos_tags]
+	#bigrams_pos = [" ".join(x).replace('PRP$','PRP_DOLLAR') for x in bigrams_pos]
+	#trigrams_pos = [" ".join(x).replace('PRP$','PRP_DOLLAR') for x in trigrams_pos]
 	print('Finished')
 	return pos_tags,bigrams_pos,trigrams_pos
 
@@ -73,7 +73,7 @@ def word_counts(statements):
 	return wc
 
 # return sentences vectors for pos unigrams
-def pos_vectors(vector_dictionary, pos_tags):
+def pos_vectors(vector_dictionary, pos_tags, count=False):
 	# One hot version of POS tags
 	occurrence_vector = np.zeros((len(pos_tags),len(vector_dictionary)))
 	# Frequency vector
@@ -87,7 +87,10 @@ def pos_vectors(vector_dictionary, pos_tags):
 				occurrence_vector[index][v_index] = 1
 				frequency_vector[index][v_index] +=1
 	print('Finished')
-	return occurrence_vector, frequency_vector
+	if count:
+		return occurrence_vector, frequency_vector
+	else:
+		return occurrence_vector
 
 
 
