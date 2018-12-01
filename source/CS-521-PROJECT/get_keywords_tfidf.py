@@ -8,7 +8,7 @@ def preprocessing_txt(dataset):
     stop_words = set(stopwords.words('english'))
     rm_punct = re.compile('[{}]'.format(re.escape(string.punctuation)))
     corpus=[]
-    for i in range(0, len(dataset.index)):
+    for elm in range(0, len(dataset.index)):
         res=' '.join([i for i in dataset['Statement'][elm].lower().split() if i not in stop_words])
         res=rm_punct.sub(' ', res)
         corpus.append(res)
@@ -43,4 +43,3 @@ def get_keywords_tfidf(dataset):
         res=extract_top_words(feature_name, sorted_vector,1)
         keywords.append(res)
     return keywords
-
