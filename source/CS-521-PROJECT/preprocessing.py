@@ -26,10 +26,11 @@ def rm_punct(sentence):
     res = ''.join(x for x in sentence if x not in flushed_punct)
     return res
 
-text_no_punct=[]
+rm_punct=re.compile('[{}]'.format(re.escape(string.punctuation)))
+text_no_punc=[]
 for i in range(0, len(dataset.index)):
-    res=rm_punct(dataset['Statement'][i])
-    text_no_punct.append(res)
+    removed=rm_punct.sub(' ', dataset['Statement'][i])
+    text_no_punc.append(removed)
 
 ## here is how to clean up non-letter symbols in statement columns
 all_text = []
