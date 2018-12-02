@@ -37,9 +37,9 @@ def get_keywords_tfidf(dataset):
     word_count_vector=cv.fit_transform(txt_corpus)
     tfidf_trans.fit(word_count_vector)
     feature_name = cv.get_feature_names()
-    for i in txt_corpus:
+    for i in range(0, len(txt_corpus)):
         tfidf_vector = tfidf_trans.transform(cv.transform([txt_corpus[i]]))
         sorted_vector=sort_coo(tfidf_vector.tocoo())
-        res=extract_top_words(feature_name, sorted_vector,1)
+        res=extract_top_words(feature_name, sorted_vector,3)
         keywords.append(res)
     return keywords
