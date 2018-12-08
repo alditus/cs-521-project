@@ -6,6 +6,8 @@ from gensim.models import Phrases
 from gensim.models.phrases import Phraser
 import spacy, en_core_web_sm
 
+nlp=en_core_web_sm.load()
+
 ##
 def preprocessing_txt(dataset):
     stop_words = set(stopwords.words('english'))
@@ -23,9 +25,6 @@ def preprocessing_txt(dataset):
 
 ##
 corpus=preprocessing_txt(dataset)
-
-##
-nlp=en_core_web_sm.load()
 
 def bigphrase_tfidf_feats(corpus):
     lemmetized_sent=[]
