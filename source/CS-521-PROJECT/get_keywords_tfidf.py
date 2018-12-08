@@ -43,3 +43,10 @@ def get_keywords_tfidf(dataset):
         res=extract_top_words(feature_name, sorted_vector,3)
         keywords.append(res)
     return keywords
+
+## 
+keywords=get_keywords_tfidf(dataset)
+sentences=[]
+for i in range(0, len(keywords)):
+    sent=' '.join(list(keywords[i].keys()))
+    sentences.append(sent)
