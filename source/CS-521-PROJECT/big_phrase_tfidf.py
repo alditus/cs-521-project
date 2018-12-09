@@ -26,7 +26,8 @@ def preprocessing_txt(dataset):
 ##
 corpus=preprocessing_txt(dataset)
 
-def bigphrase_tfidf_feats(corpus):
+def bigphrase_tfidf_feats(dataset):
+    corpus=preprocessing_txt(dataset)
     lemmetized_sent=[]
     for each_sent in nlp.pipe(corpus, batch_size=50, n_threads=-1):
         if each_sent.is_parsed:

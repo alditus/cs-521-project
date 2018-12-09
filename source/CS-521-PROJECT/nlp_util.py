@@ -1,5 +1,6 @@
 from pycorenlp import StanfordCoreNLP
 import numpy as np
+import string
 
 class NLP_Task:
 	"""
@@ -22,13 +23,39 @@ class NLP_Task:
 			  })
 			for output in annotations['sentences']:
 				statement_tags.append('<s>')
+				previous = ''
 				for token in output['tokens']:
 					if return_word_tag_pairs:
 						statement_tags.append(token['word']+'/'+token['pos'])
 					else:
 						statement_tags.append(token['pos'])
+
 			POS_tags.append(statement_tags)
 		return POS_tags
+
+	
+
+	"""
+		APPROACH TO REMOVE TWO OR MORE NP appearing together
+		Also, two or more CD appearing together: Usually 22 Millions is tagged as CD CD and for the sake of analysis we want to group the as CD
+	"""
+	def RemoveConsecutiveTags(self,list_to_remove, postags,ignore_punctuation=False):
+		withoutConsecutiveTags = list()
+		for each_tag in postags:
+			removed = list()
+			previous = ''
+			for tt in each_tag:
+				if tt != previous:
+					if not ignore_punctuation: # ignore punctuation, add it as previous POS but do not add it to the final list
+						removed.append(tt)
+					elif tt not in string.punctuation:
+						removed.append(tt)
+					previous = tt
+				elif tt not in list_to_remove:
+					removed.append(tt)
+					previous = tt
+			withoutConsecutiveTags.append(removed)
+		return withoutConsecutiveTags
 
 	"""
 		return POS grouped by number of grams
@@ -63,3 +90,22 @@ class NLP_Task:
 				token_list.append(t['word'])
 			tbs.append(token_list)
 		return tbs
+
+	"""
+		return the unique values for POS grouped by any
+	"""
+	def UniquePosTags(self, postags, return_counts = False):
+		pos_list =list()
+		counts = dict()
+		for pos in postags:
+			for p in pos:
+				if p not in pos_list:
+					pos_list.append(p)
+				if p not in counts.keys():
+					counts[p] = 1
+				else:
+					counts[p] += 1
+		if return_counts:
+			return pos_list, counts
+		else:
+			return pos_list

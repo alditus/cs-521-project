@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
 """
 	Load tsv files.
 	return: train, validation and testing files
@@ -74,3 +75,42 @@ def mode(seq):
       if c > cnt[maxItem]:
         maxItem = item
     return maxItem
+
+
+#use_built_in_vectors => if True use CountVectorizer, otherwise it uses the version of pos_vectors in preprocessing
+def GetFeaturesFromPOS(training_data, validation_data, testing_data, user_defined_vocabulary=None):
+
+	user_defined_vocabulary = [x.lower().replace('$','dollar') for x in user_defined_vocabulary]
+
+	# making string of the data
+	training_str = [" ".join(x) for x in training_data]
+	validation_str = [" ".join(x) for x in validation_data]
+	testing_str = [" ".join(x) for x in testing_data]
+
+	#replace $ by dollar
+	training_str = [x.replace('$', 'dollar').replace('<s>','sos') for x in training_str]
+	validation_str = [x.replace('$', 'dollar').replace('<s>','sos') for x in validation_str]
+	testing_str = [x.replace('$', 'dollar').replace('<s>','sos') for x in testing_str]
+
+	# features using binary iformation
+	oneHotVectorizer = CountVectorizer(vocabulary=user_defined_vocabulary,binary=True)
+	tr_onehot = oneHotVectorizer.fit_transform(training_str).toarray()
+	val_onehot = oneHotVectorizer.transform(validation_str).toarray()
+	te_onehot = oneHotVectorizer.transform(testing_str).toarray()
+	print(oneHotVectorizer.vocabulary_)
+
+	# features using no-binary information (counting)
+	countVectorizer = CountVectorizer(vocabulary=user_defined_vocabulary,binary=True)
+	tr_count = countVectorizer.fit_transform(training_str).toarray()
+	val_count = countVectorizer.transform(validation_str).toarray()
+	te_count = countVectorizer.transform(testing_str).toarray()
+
+	# features using tf-idf vectors
+
+	tfIdfVectorizer = TfidfTransformer(norm='l2', use_idf=True, smooth_idf=True, sublinear_tf=False)
+	tr_tfidf = tfIdfVectorizer.fit_transform(tr_count)
+	val_tfidf = tfIdfVectorizer.transform(val_count)
+	te_tfidf =  tfIdfVectorizer.transform(te_count)
+
+	return tr_onehot, tr_count, tr_tfidf, val_onehot, val_count, val_tfidf, te_onehot, te_count, te_tfidf
+ 
