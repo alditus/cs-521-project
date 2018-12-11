@@ -62,19 +62,19 @@ def tsv_to_dict(tsv_file,columns=None):
 """
 def mode(seq):
   if len(seq) == 0:
-    return 1.
+	return 1.
   else:
-    cnt = {}
-    for item in seq:
-      if item in cnt:
-        cnt[item] += 1
-      else:
-        cnt[item] = 1
-    maxItem = seq[0]
-    for item,c in cnt.items():
-      if c > cnt[maxItem]:
-        maxItem = item
-    return maxItem
+	cnt = {}
+	for item in seq:
+	  if item in cnt:
+		cnt[item] += 1
+	  else:
+		cnt[item] = 1
+	maxItem = seq[0]
+	for item,c in cnt.items():
+	  if c > cnt[maxItem]:
+		maxItem = item
+	return maxItem
 
 
 #use_built_in_vectors => if True use CountVectorizer, otherwise it uses the version of pos_vectors in preprocessing
@@ -113,4 +113,3 @@ def GetFeaturesFromPOS(training_data, validation_data, testing_data, user_define
 	te_tfidf =  tfIdfVectorizer.transform(te_count)
 
 	return tr_onehot, tr_count, tr_tfidf, val_onehot, val_count, val_tfidf, te_onehot, te_count, te_tfidf
- 
